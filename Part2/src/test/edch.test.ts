@@ -1,3 +1,4 @@
+import { getJsonWalletAddress } from 'ethers/lib/utils';
 import {
   buildEddsaModule,
   decrypt,
@@ -8,12 +9,14 @@ import {
 } from '../index';
 
 describe('ECDH test', () => {
+  jest.setTimeout(30000);
   let eddsa: EdDSA;
   beforeAll(async () => {
     eddsa = await buildEddsaModule();
   }, 15000);
 
   it('should encrypt/decrypt text', async () => {
+
     const { privKey: bobPrivKey, pubKey: bobPubKey } = genKeypair(eddsa);
     const { privKey: alicePrivKey, pubKey: alicePubKey } = genKeypair(eddsa);
     const ecdhSharedKey = await genEcdhSharedKey({
